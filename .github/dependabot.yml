@@ -1,0 +1,37 @@
+# Dependabot設定ファイル
+# uvを使用したPythonプロジェクトの依存関係を自動更新
+
+version: 2
+updates:
+  # uv依存関係の更新（pyproject.tomlとuv.lock）
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    # PRの数を制限
+    open-pull-requests-limit: 10
+    # PRにラベルを付与
+    labels:
+      - "dependencies"
+      - "python"
+    # アップデート戦略
+    versioning-strategy: auto
+    # コミットメッセージのプレフィックス
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+  # GitHub Actionsの更新
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Tokyo"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
