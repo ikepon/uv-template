@@ -43,7 +43,7 @@ uv venv
 source .venv/bin/activate  # Windowsの場合: .venv\Scripts\activate
 
 # 開発モードでプロジェクトをインストール
-uv pip install -e ".[dev]"
+uv sync --all-extras
 
 # pre-commitフックをインストール
 pre-commit install
@@ -76,8 +76,8 @@ uv add requests
 # 開発用依存関係を追加
 uv add --dev pytest-mock
 
-# すべての依存関係をインストール
-uv pip install -e ".[dev]"
+# すべての依存関係をインストール（uv.lockから）
+uv sync
 ```
 
 ### テストの実行
@@ -182,9 +182,9 @@ ls dist/
 
 ## 💡 Tips
 
-- `uv pip compile --upgrade`で依存関係を最新に保つ
-- `uv pip list`でインストール済みパッケージを確認
-- `uv pip sync`でロックファイルと環境を同期
+- `uv lock --upgrade`で依存関係を最新に保つ
+- `uv tree`でインストール済みパッケージの依存関係ツリーを確認
+- `uv sync`でuv.lockファイルと環境を同期
 - プロジェクト間の分離のため仮想環境を使用
 
 ---
