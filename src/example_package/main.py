@@ -22,7 +22,7 @@ def greeting(name: str) -> str:
     """
     if not name or not name.strip():
         raise ValueError("Name cannot be empty")
-    
+
     return f"Hello, {name.strip()}!"
 
 
@@ -50,7 +50,7 @@ def calculate_sum(numbers: list[int | float]) -> int | float:
     """
     if not numbers:
         raise ValueError("Cannot calculate sum of empty list")
-    
+
     return sum(numbers)
 
 

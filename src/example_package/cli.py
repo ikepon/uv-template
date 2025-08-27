@@ -5,7 +5,7 @@ This module provides a simple CLI for demonstrating the package functionality.
 
 import argparse
 import sys
-from typing import Sequence
+from collections.abc import Sequence
 
 from .main import calculate_sum, greeting
 
@@ -31,14 +31,13 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     # Sum command
     sum_parser = subparsers.add_parser("sum", help="Calculate sum of numbers")
-    sum_parser.add_argument(
-        "numbers", 
-        nargs="+", 
-        type=float,
-        help="Numbers to sum"
-    )
+    sum_parser.add_argument("numbers", nargs="+", type=float, help="Numbers to sum")
 
-    args = parser.parse_args(argv)
+    try:
+        args = parser.parse_args(argv)
+    except SystemExit as e:
+        # ArgumentParser exits with 2 on error, 0 on help
+        return int(e.code) if e.code is not None else 0
 
     if not args.command:
         parser.print_help()
@@ -46,12 +45,12 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     try:
         if args.command == "greet":
-            result = greeting(args.name)
-            print(result)
+            greeting_result = greeting(args.name)
+            print(greeting_result)
         elif args.command == "sum":
-            result = calculate_sum(args.numbers)
-            print(f"Sum: {result}")
-        
+            sum_result = calculate_sum(args.numbers)
+            print(f"Sum: {sum_result}")
+
         return 0
 
     except Exception as e:
