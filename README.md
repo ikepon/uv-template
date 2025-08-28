@@ -21,9 +21,11 @@
 
 ### このテンプレートを使う
 
-1. GitHubの「Use this template」ボタンをクリック
-2. このテンプレートから新しいリポジトリを作成
-3. 作成したリポジトリをクローン:
+1. このリポジトリの **「Use this template」** ボタン（緑色）をクリック
+2. 「Create a new repository」を選択
+3. リポジトリ名とオーナーを設定して「Create repository from template」をクリック
+4. 作成したリポジトリをクローン:
+
 ```bash
 git clone https://github.com/YOUR_USERNAME/YOUR_PROJECT_NAME.git
 cd YOUR_PROJECT_NAME
@@ -31,10 +33,13 @@ cd YOUR_PROJECT_NAME
 
 ### プロジェクトのセットアップ
 
-1. **`pyproject.toml`のプロジェクトメタデータを更新**:
-   - `name = "project-name"` をあなたのプロジェクト名に変更
-   - `description` を更新
-   - 必要に応じてPythonバージョンを調整
+1. **プロジェクトをカスタマイズ**:
+   - `pyproject.toml`のプロジェクトメタデータを更新:
+     - `name = "project-name"` をあなたのプロジェクト名に変更
+     - `description` を更新
+     - 必要に応じてPythonバージョンを調整
+   - `LICENSE`ファイルの著者名を変更
+   - `src/example_package/`をあなたのパッケージ名にリネーム
 
 2. **プロジェクトの初期化**:
 ```bash
@@ -47,6 +52,11 @@ uv sync --all-extras
 
 # pre-commitフックをインストール
 pre-commit install
+
+# 初回テストとリンティングを実行して動作確認
+pytest
+ruff check .
+mypy src/
 ```
 
 ## 📁 プロジェクト構造
