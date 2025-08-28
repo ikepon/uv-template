@@ -12,7 +12,7 @@ class TestCLIGreetCommand:
         """Test basic greet command."""
         exit_code = main(["greet", "World"])
         captured = capsys.readouterr()
-        
+
         assert exit_code == 0
         assert captured.out.strip() == "Hello, World!"
 
@@ -20,7 +20,7 @@ class TestCLIGreetCommand:
         """Test greet command with Japanese characters."""
         exit_code = main(["greet", "Python"])
         captured = capsys.readouterr()
-        
+
         assert exit_code == 0
         assert captured.out.strip() == "Hello, Python!"
 
@@ -28,7 +28,7 @@ class TestCLIGreetCommand:
         """Test greet command with empty name shows error."""
         exit_code = main(["greet", ""])
         captured = capsys.readouterr()
-        
+
         assert exit_code == 1
         assert "Error: Name cannot be empty" in captured.err
 
@@ -40,7 +40,7 @@ class TestCLISumCommand:
         """Test sum command with integers."""
         exit_code = main(["sum", "1", "2", "3"])
         captured = capsys.readouterr()
-        
+
         assert exit_code == 0
         assert captured.out.strip() == "Sum: 6.0"
 
@@ -48,7 +48,7 @@ class TestCLISumCommand:
         """Test sum command with floats."""
         exit_code = main(["sum", "1.5", "2.5"])
         captured = capsys.readouterr()
-        
+
         assert exit_code == 0
         assert captured.out.strip() == "Sum: 4.0"
 
@@ -56,7 +56,7 @@ class TestCLISumCommand:
         """Test sum command with mixed numbers."""
         exit_code = main(["sum", "1", "2.5", "3"])
         captured = capsys.readouterr()
-        
+
         assert exit_code == 0
         assert captured.out.strip() == "Sum: 6.5"
 
@@ -64,7 +64,7 @@ class TestCLISumCommand:
         """Test sum command with negative numbers."""
         exit_code = main(["sum", "-1", "1", "-1", "1"])
         captured = capsys.readouterr()
-        
+
         assert exit_code == 0
         assert captured.out.strip() == "Sum: 0.0"
 
@@ -72,26 +72,26 @@ class TestCLISumCommand:
         """Test sum command with single number."""
         exit_code = main(["sum", "42"])
         captured = capsys.readouterr()
-        
+
         assert exit_code == 0
         assert captured.out.strip() == "Sum: 42.0"
 
-    @pytest.mark.parametrize("numbers,expected", [
-        (["1", "2", "3"], "Sum: 6.0"),
-        (["10", "-5", "0"], "Sum: 5.0"),
-        (["100"], "Sum: 100.0"),
-        (["-1", "1"], "Sum: 0.0"),
-    ])
+    @pytest.mark.parametrize(
+        "numbers,expected",
+        [
+            (["1", "2", "3"], "Sum: 6.0"),
+            (["10", "-5", "0"], "Sum: 5.0"),
+            (["100"], "Sum: 100.0"),
+            (["-1", "1"], "Sum: 0.0"),
+        ],
+    )
     def test_sum_command_parametrized(
-        self, 
-        capsys: pytest.CaptureFixture[str],
-        numbers: list[str], 
-        expected: str
+        self, capsys: pytest.CaptureFixture[str], numbers: list[str], expected: str
     ) -> None:
         """Test sum command with various number combinations."""
         exit_code = main(["sum"] + numbers)
         captured = capsys.readouterr()
-        
+
         assert exit_code == 0
         assert captured.out.strip() == expected
 
@@ -103,7 +103,7 @@ class TestCLIGeneral:
         """Test that running without command shows help and returns 1."""
         exit_code = main([])
         captured = capsys.readouterr()
-        
+
         assert exit_code == 1
         assert "usage:" in captured.out.lower()
         assert "example-package" in captured.out
@@ -112,7 +112,7 @@ class TestCLIGeneral:
         """Test that invalid command shows error."""
         exit_code = main(["invalid-command"])
         captured = capsys.readouterr()
-        
+
         assert exit_code != 0
         assert "invalid choice" in captured.err.lower()
 
@@ -120,7 +120,7 @@ class TestCLIGeneral:
         """Test greet command without name argument shows error."""
         exit_code = main(["greet"])
         captured = capsys.readouterr()
-        
+
         assert exit_code != 0
         assert "required" in captured.err.lower()
 
@@ -128,7 +128,7 @@ class TestCLIGeneral:
         """Test sum command without numbers shows error."""
         exit_code = main(["sum"])
         captured = capsys.readouterr()
-        
+
         assert exit_code != 0
         assert "required" in captured.err.lower()
 
@@ -136,6 +136,6 @@ class TestCLIGeneral:
         """Test sum command with invalid number shows error."""
         exit_code = main(["sum", "not-a-number"])
         captured = capsys.readouterr()
-        
+
         assert exit_code != 0
         assert "invalid" in captured.err.lower()
