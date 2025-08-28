@@ -33,12 +33,15 @@ class TestGreeting:
         with pytest.raises(ValueError, match="Name cannot be empty"):
             greeting("   ")
 
-    @pytest.mark.parametrize("name,expected", [
-        ("Alice", "Hello, Alice!"),
-        ("Bob", "Hello, Bob!"),
-        ("123", "Hello, 123!"),
-        ("special@chars", "Hello, special@chars!"),
-    ])
+    @pytest.mark.parametrize(
+        "name,expected",
+        [
+            ("Alice", "Hello, Alice!"),
+            ("Bob", "Hello, Bob!"),
+            ("123", "Hello, 123!"),
+            ("special@chars", "Hello, special@chars!"),
+        ],
+    )
     def test_greeting_parametrized(self, name: str, expected: str) -> None:
         """Test greeting with various names."""
         result = greeting(name)
@@ -83,13 +86,16 @@ class TestCalculateSum:
         with pytest.raises(ValueError, match="Cannot calculate sum of empty list"):
             calculate_sum([])
 
-    @pytest.mark.parametrize("numbers,expected", [
-        ([1, 2, 3], 6),
-        ([10, -5, 0], 5),
-        ([0.1, 0.2, 0.3], pytest.approx(0.6)),
-        ([100], 100),
-        ([-1, 1, -1, 1], 0),
-    ])
+    @pytest.mark.parametrize(
+        "numbers,expected",
+        [
+            ([1, 2, 3], 6),
+            ([10, -5, 0], 5),
+            ([0.1, 0.2, 0.3], pytest.approx(0.6)),
+            ([100], 100),
+            ([-1, 1, -1, 1], 0),
+        ],
+    )
     def test_calculate_sum_parametrized(self, numbers: list[int | float], expected: int | float) -> None:
         """Test sum calculation with various number combinations."""
         result = calculate_sum(numbers)
@@ -127,16 +133,19 @@ class TestIsEven:
         assert is_even(-3) is False
         assert is_even(-99) is False
 
-    @pytest.mark.parametrize("number,expected", [
-        (0, True),
-        (1, False),
-        (2, True),
-        (3, False),
-        (-1, False),
-        (-2, True),
-        (1000, True),
-        (1001, False),
-    ])
+    @pytest.mark.parametrize(
+        "number,expected",
+        [
+            (0, True),
+            (1, False),
+            (2, True),
+            (3, False),
+            (-1, False),
+            (-2, True),
+            (1000, True),
+            (1001, False),
+        ],
+    )
     def test_is_even_parametrized(self, number: int, expected: bool) -> None:
         """Test is_even with various numbers."""
         result = is_even(number)
